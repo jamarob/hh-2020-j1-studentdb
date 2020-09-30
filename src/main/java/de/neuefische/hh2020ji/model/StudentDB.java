@@ -1,35 +1,33 @@
 package de.neuefische.hh2020ji.model;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class StudentDB {
 
-    private ArrayList<Student> students;
+    private HashMap<Integer,Student> students;
 
     public StudentDB(List<Student> students) {
-        this.students = new ArrayList<>(students);
+        this.students = new HashMap<>();
+        for(Student student: students){
+            add(student);
+        }
     }
 
     public List<Student> list(){
-        return students;
+        return new ArrayList<>(students.values());
     }
 
 
 
     public Student randomStudent(){
-        double random = Math.random();
-        int randomIndex = (int) (random * students.size());
-        return students.get(randomIndex);
+        int randomIndex = (int) (Math.random() * students.size());
+        return list().get(randomIndex);
     }
 
     @Override
     public String toString(){
         String result = "StudentDB(\n";
-        for(Student student : students) {
+        for(Student student : list()) {
             result += student.toString() + "\n";
         }
         result += ")";
@@ -37,24 +35,15 @@ public class StudentDB {
     }
 
     public void add(Student student) {
-        students.add(student);
+        students.put(student.getId(),student);
     }
 
     public void removeById(int id) {
-        Student student = findById(id);
-        if(student == null){
-            return;
-        }
-        students.remove(student);
+        students.remove(id);
     }
 
     private Student findById(int id) {
-        for(Student student: students) {
-            if(student.getId() == id) {
-                return student;
-            }
-        }
-        return null;
+        return students.get(id);
     }
 
 
