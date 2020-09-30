@@ -1,23 +1,29 @@
 package de.neuefische.hh2020ji.model;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 public class StudentDB {
 
-    private Student[] students;
+    private ArrayList<Student> students;
 
-    public StudentDB(Student[] students) {
-        this.students = students;
+    public StudentDB(List<Student> students) {
+        this.students = new ArrayList<>(students);
     }
 
-    public Student[] list(){
+    public List<Student> list(){
         return students;
     }
 
+
+
     public Student randomStudent(){
         double random = Math.random();
-        int randomIndex = (int) (random * students.length);
-        return students[randomIndex];
+        int randomIndex = (int) (random * students.size());
+        return students.get(randomIndex);
     }
 
     @Override
@@ -31,37 +37,25 @@ public class StudentDB {
     }
 
     public void add(Student student) {
-        Student[] updatedStudents = new Student[students.length+1];
-        for (int i = 0; i < students.length; i++) {
-            updatedStudents[i] = students[i];
-        }
-        updatedStudents[students.length] = student;
-        students = updatedStudents;
+        students.add(student);
     }
 
-    public void remove(int id) {
-        if (!containsId(id)) {
+    public void removeById(int id) {
+        Student student = findById(id);
+        if(student == null){
             return;
         }
-        boolean removed = false;
-        Student[] updatedStudents = new Student[students.length-1];
-        for (int i = 0; i < updatedStudents.length; i++) {
-            Student student = students[i];
-            if(student.getId() == id) {
-                removed = true;
-            }
-            int readIndex = removed ? i+1 : i;
-            updatedStudents[i] = students[readIndex];
-        }
-        students = updatedStudents;
+        students.remove(student);
     }
 
-    private boolean containsId(int id) {
+    private Student findById(int id) {
         for(Student student: students) {
             if(student.getId() == id) {
-                return true;
+                return student;
             }
         }
-        return false;
+        return null;
     }
+
+
 }
