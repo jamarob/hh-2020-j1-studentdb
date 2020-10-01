@@ -3,6 +3,7 @@ package de.neuefische.hh2020ji.model;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -99,4 +100,32 @@ class StudentDBTest {
         }
     }
 
+    @Test
+    void testFindByIdGivesEmptyOptionalWhenIdIsNotPresent(){
+        StudentDB studentDB = new StudentDB(
+                List.of(
+                        new Student("Jane Doe", 1),
+                        new Student("John Doe", 2),
+                        new Student("Molly Doe", 3)
+                ));
+
+        Optional<Student> actual = studentDB.findById(42);
+
+        assertTrue(actual.isEmpty());
+    }
+
+    @Test
+    void testFindByIdFivesOptionalWithCorrectStudent(){
+        StudentDB studentDB = new StudentDB(
+                List.of(
+                        new Student("Jane Doe", 1),
+                        new Student("John Doe", 2),
+                        new Student("Molly Doe", 3)
+                ));
+
+        Optional<Student> actual = studentDB.findById(2);
+
+        assertTrue(actual.isPresent());
+        assertEquals(new Student("John Doe", 2), actual.get());
+    }
 }

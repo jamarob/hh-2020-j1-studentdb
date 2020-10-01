@@ -1,5 +1,6 @@
 package de.neuefische.hh2020ji.model;
 
+import javax.swing.text.html.Option;
 import java.util.*;
 
 public class StudentDB {
@@ -45,8 +46,12 @@ public class StudentDB {
         students.remove(id);
     }
 
-    private Student findById(int id) {
-        return students.get(id);
+    public Optional<Student> findById(int id) {
+        if(students.containsKey(id)){
+            return Optional.of(students.get(id));
+        }else{
+            return Optional.empty();
+        }
     }
 
 
