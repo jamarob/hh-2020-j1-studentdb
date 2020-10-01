@@ -63,6 +63,24 @@ class StudentDBTest {
     }
 
     @Test
+    void testAddStudentRuntimeException(){
+        try {
+            StudentDB studentDB = new StudentDB(
+                    List.of(
+                            new Student("Jane Doe", 1),
+                            new Student("John Doe", 2)
+                    ));
+
+            studentDB.add(new Student("Molly Doe", 2));
+            fail("Exception was not thrown");
+        }
+        catch (RuntimeException e) {
+            assertEquals("Id already exists", e.getMessage());
+
+        }
+    }
+
+    @Test
     void testRemoveStudent(){
         StudentDB studentDB = new StudentDB(
                 List.of(

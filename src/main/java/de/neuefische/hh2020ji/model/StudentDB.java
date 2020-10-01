@@ -35,7 +35,11 @@ public class StudentDB {
     }
 
     public void add(Student student) {
-        students.put(student.getId(),student);
+        if(!students.containsKey(student.getId())) {
+            students.put(student.getId(), student);
+        } else {
+            throw new RuntimeException("Id already exists");
+        }
     }
 
     public void removeById(int id) {
