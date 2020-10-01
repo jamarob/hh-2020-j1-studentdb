@@ -54,5 +54,8 @@ public class StudentDB {
         }
     }
 
+    public void printIds(){
+        students.keySet().forEach(id -> System.out.println(id));
+    }
 
 }
