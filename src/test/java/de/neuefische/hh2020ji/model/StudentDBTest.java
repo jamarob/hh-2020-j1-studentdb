@@ -81,4 +81,22 @@ class StudentDBTest {
         assertEquals(new Student("Molly Doe", 3), actual.get(1));
     }
 
+    @Test
+    void testThrowsWhenStudentIdIsAlreadyTaken(){
+        StudentDB studentDB = new StudentDB(
+                List.of(
+                        new Student("Jane Doe", 1),
+                        new Student("John Doe", 2),
+                        new Student("Molly Doe", 3)
+                ));
+
+        try{
+            studentDB.add(new Student("John Doe",2));
+            fail("Exception not thrown.");
+        }catch(RuntimeException e){
+            String actual = e.getMessage();
+            assertEquals("StudentID already in list.", actual);
+        }
+    }
+
 }

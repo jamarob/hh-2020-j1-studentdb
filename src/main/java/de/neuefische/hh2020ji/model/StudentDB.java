@@ -35,6 +35,9 @@ public class StudentDB {
     }
 
     public void add(Student student) {
+        if(students.containsKey(student.getId())){
+            throw new RuntimeException("StudentID already in list.");
+        }
         students.put(student.getId(),student);
     }
 
