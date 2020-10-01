@@ -17,7 +17,7 @@ class StudentDBTest {
 
         assertArrayEquals(new Student[]{
                 new Student("Jane Doe", 1),
-                new Student("John Doe", 2)
+                new Student("John Doe", 3)
         }, actual);
     }
 
